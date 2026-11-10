@@ -1,0 +1,32 @@
+name: 'Notify Microsoft Teams'
+description: 'Post an Adaptive Card to a Microsoft Teams channel through a Teams Workflows webhook.'
+inputs:
+  webhook_url:
+    description: 'Teams Workflows webhook URL ("Send webhook alerts to a channel"). Pass it from a secret: the URL carries its own signature.'
+    required: true
+  title:
+    description: 'Card headline, e.g. "🐍 API deploy: occam-app-api → pre". Markdown is not rendered here.'
+    required: true
+  status:
+    description: 'success, failure, cancelled, skipped or info. Sets the header colour and icon; `needs.<job>.result` and `job.status` can be passed as-is.'
+    required: false
+    default: 'info'
+  message:
+    description: 'Optional body text. Teams renders basic Markdown (**bold**, _italic_, [links](url), lists); HTML is shown as plain text.'
+    required: false
+    default: ''
+  facts:
+    description: 'Optional "Key: value" lines, one per line, rendered as a two-column fact list. Empty values are dropped.'
+    required: false
+    default: ''
+  links:
+    description: 'Optional "Label | URL" lines, one per line, rendered as buttons. Lines with an empty URL are dropped.'
+    required: false
+    default: ''
+  run_link:
+    description: 'Add a "View run" button that opens this workflow run.'
+    required: false
+    default: 'true'
+runs:
+  using: 'node24'
+  main: 'index.js'
